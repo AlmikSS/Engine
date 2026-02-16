@@ -7,7 +7,7 @@ namespace Engine.Entities.Components
     public sealed class Rigidbody2D : Component
     {
         public Vector2 Position { get; private set; }
-        public Vector2 Velocity { get; private set; }
+        public Vector2 Velocity;
         public float Mass { get; private set; } = 1;
 
         private Vector2 _force;

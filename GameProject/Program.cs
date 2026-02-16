@@ -23,6 +23,7 @@ public static class Program
         player.Transform.Scale = new Vector2(0.1f, 0.1f);
         player.AddComponent<SpriteRenderer>();
         player.AddComponent<Rigidbody2D>();
+        player.AddComponent<MoveComponent>();
 
         if (player.TryGetComponent<SpriteRenderer>(out var sr))
         {
@@ -53,18 +54,41 @@ public static class Program
 
 public class MoveComponent : GameBehaviour
 {
-    protected override void OnTick()
+    private Rigidbody2D _rb;
+
+    protected override void OnInitialize()
     {
-        base.OnTick();
+        base.OnInitialize();
+        
+        if (!Entity.TryGetComponent(out Rigidbody2D rigidbody))
+            return;
+        
+        _rb = rigidbody;
+    }
+
+    protected override void OnFixedTick()
+    {
+        base.OnFixedTick();
+        
+        if (_rb == null)
+            return;
 
         if (InputSystem.IsPressed(KeyCode.W))
-            Transform.Position.Y += (100 * Time.DeltaTime);
+        {
+            _rb.Velocity = new Vector2(_rb.Velocity.X, 100);
+        }
         if (InputSystem.IsPressed(KeyCode.S))
-            Transform.Position.Y -= (100 * Time.DeltaTime);
+        {
+            _rb.Velocity = new Vector2(_rb.Velocity.X, -100);
+        }
         if (InputSystem.IsPressed(KeyCode.A))
-            Transform.Position.X -= (100 * Time.DeltaTime);
+        {
+            _rb.Velocity = new Vector2(-100, _rb.Velocity.Y);
+        }
         if (InputSystem.IsPressed(KeyCode.D))
-            Transform.Position.X += (100 * Time.DeltaTime);
+        {
+            _rb.Velocity = new Vector2(100, _rb.Velocity.Y);
+        }
     }
 }
 
