@@ -1,7 +1,7 @@
 ﻿using Engine.API;
-using Engine.World.Components;
+using Engine.Entities.Components;
 
-namespace Engine.World
+namespace Engine.Entities
 {
     public class Entity
     {
@@ -17,6 +17,14 @@ namespace Engine.World
             Transform.Owner = this;
         }
 
+        internal void OnSceneCreated()
+        {
+            foreach (var component in _components)
+            {
+                component.OnSceneCreated();
+            }
+        }
+        
         internal void OnTick()
         {
             foreach (var component in _components)

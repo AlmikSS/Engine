@@ -1,5 +1,5 @@
-﻿using Engine.World;
-using Engine.World.Components;
+﻿using Engine.Entities;
+using Engine.Entities.Components;
 
 namespace Engine.API
 {

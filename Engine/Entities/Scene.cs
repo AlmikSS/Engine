@@ -1,4 +1,4 @@
-﻿namespace Engine.World
+﻿namespace Engine.Entities
 {
     public class Scene
     {
@@ -14,6 +14,14 @@
         public void RemoveEntity(Entity entity)
         {
             _activeEntities.Remove(entity);
+        }
+
+        internal void OnSceneCreated()
+        {
+            foreach (var entity in _activeEntities)
+            {
+                entity.OnSceneCreated();
+            }
         }
         
         internal void OnTick()

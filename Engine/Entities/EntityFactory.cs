@@ -1,6 +1,6 @@
-﻿using Engine.World.Components;
+﻿using Engine.Entities.Components;
 
-namespace Engine.World
+namespace Engine.Entities
 {
     public static class EntityFactory
     {

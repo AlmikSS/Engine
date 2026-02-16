@@ -1,5 +1,5 @@
-﻿using Engine.World;
-using Engine.World.Components;
+﻿using Engine.Entities;
+using Engine.Entities.Components;
 using Raylib_cs;
 using RayRect = Raylib_cs.Rectangle;
 using RayVec2 = System.Numerics.Vector2;

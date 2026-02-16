@@ -2,9 +2,9 @@
 
 public static class Time
 {
-    public static double PreviousFrameTime { get; internal set; }
-    public static double CurrentTime { get; internal set; }
-    public static double DeltaTime { get; internal set; }
-    public static double FixedDeltaTime => 1.0 / 50.0;
+    public static float PreviousFrameTime { get; internal set; }
+    public static float CurrentTime { get; internal set; }
+    public static float DeltaTime { get; internal set; }
+    public static float FixedDeltaTime => 1f / 50f;
     public static int CurrentFrame { get; internal set; }
 }

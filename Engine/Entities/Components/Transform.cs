@@ -1,6 +1,6 @@
 ﻿using Engine.Types;
 
-namespace Engine.World.Components
+namespace Engine.Entities.Components
 {
     public sealed class Transform : Component
     {

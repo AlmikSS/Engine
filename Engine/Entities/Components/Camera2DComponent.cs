@@ -1,7 +1,7 @@
 ﻿using RayCamera2D = Raylib_cs.Camera2D;
 using RayVec2 = System.Numerics.Vector2;
 
-namespace Engine.World.Components
+namespace Engine.Entities.Components
 {
     public sealed class Camera2DComponent : Component
     {

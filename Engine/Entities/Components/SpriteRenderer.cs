@@ -1,7 +1,7 @@
 ﻿using Engine.Types;
 using Raylib_cs;
 
-namespace Engine.World.Components
+namespace Engine.Entities.Components
 {
     public sealed class SpriteRenderer : Component
     {
