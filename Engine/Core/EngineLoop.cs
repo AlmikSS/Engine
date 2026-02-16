@@ -1,8 +1,8 @@
 ﻿using System.Diagnostics;
+using Engine.Core;
 
 var isRunning = true;
 var accumulator = 0.0;
-const double fixedDelta = 1.0 / 50.0;
 
 var stopwatch = new Stopwatch();
 stopwatch.Start();
@@ -13,14 +13,17 @@ while (isRunning)
 {
     double currentTime = stopwatch.Elapsed.TotalMilliseconds;
     var deltaTime = currentTime - previousTime;
-    previousTime = currentTime;
     
+    Time.CurrentTime = currentTime;
+    Time.PreviousFrameTime = previousTime;
+    Time.DeltaTime = deltaTime;
+    
+    previousTime = currentTime;
     accumulator += deltaTime;
 
-    while (accumulator >= fixedDelta)
+    while (accumulator >= Time.FixedDeltaTime)
     {
-        Console.WriteLine($"Current time: {currentTime} \n Frame time: {deltaTime}");
-        accumulator -= fixedDelta;
+        accumulator -= Time.FixedDeltaTime;
     }
 
     if (Console.KeyAvailable)
