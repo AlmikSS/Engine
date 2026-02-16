@@ -10,12 +10,12 @@
 using System;
 using System.Reflection;
 
-[assembly: System.Reflection.AssemblyCompanyAttribute("Engine")]
+[assembly: System.Reflection.AssemblyCompanyAttribute("HawkEngine")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
 [assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b6e8084f280c3103f1cb470062eb64c62ba73dd6")]
-[assembly: System.Reflection.AssemblyProductAttribute("Engine")]
-[assembly: System.Reflection.AssemblyTitleAttribute("Engine")]
+[assembly: System.Reflection.AssemblyProductAttribute("HawkEngine")]
+[assembly: System.Reflection.AssemblyTitleAttribute("HawkEngine")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
 
 // Создано классом WriteCodeFragment MSBuild.

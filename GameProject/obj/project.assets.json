@@ -1,11 +1,30 @@
 {
   "version": 3,
   "targets": {
-    "net10.0": {}
+    "net10.0": {
+      "Engine/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v10.0",
+        "compile": {
+          "bin/placeholder/Engine.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Engine.dll": {}
+        }
+      }
+    }
   },
-  "libraries": {},
+  "libraries": {
+    "Engine/1.0.0": {
+      "type": "project",
+      "path": "../Engine/Engine.csproj",
+      "msbuildProject": "../Engine/Engine.csproj"
+    }
+  },
   "projectFileDependencyGroups": {
-    "net10.0": []
+    "net10.0": [
+      "Engine >= 1.0.0"
+    ]
   },
   "packageFolders": {
     "C:\\Users\\2008A\\.nuget\\packages\\": {}
@@ -13,11 +32,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\2008A\\Documents\\RiderProjects\\Engine\\Engine\\Engine.csproj",
-      "projectName": "Engine",
-      "projectPath": "C:\\Users\\2008A\\Documents\\RiderProjects\\Engine\\Engine\\Engine.csproj",
+      "projectUniqueName": "C:\\Users\\2008A\\Documents\\RiderProjects\\Engine\\GameProject\\GameProject.csproj",
+      "projectName": "GameProject",
+      "projectPath": "C:\\Users\\2008A\\Documents\\RiderProjects\\Engine\\GameProject\\GameProject.csproj",
       "packagesPath": "C:\\Users\\2008A\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\2008A\\Documents\\RiderProjects\\Engine\\Engine\\obj\\",
+      "outputPath": "C:\\Users\\2008A\\Documents\\RiderProjects\\Engine\\GameProject\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\2008A\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -31,7 +50,11 @@
       "frameworks": {
         "net10.0": {
           "targetAlias": "net10.0",
-          "projectReferences": {}
+          "projectReferences": {
+            "C:\\Users\\2008A\\Documents\\RiderProjects\\Engine\\Engine\\Engine.csproj": {
+              "projectPath": "C:\\Users\\2008A\\Documents\\RiderProjects\\Engine\\Engine\\Engine.csproj"
+            }
+          }
         }
       },
       "warningProperties": {

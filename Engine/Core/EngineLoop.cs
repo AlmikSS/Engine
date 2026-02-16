@@ -1,38 +1,57 @@
 ﻿using System.Diagnostics;
-using Engine.Core;
+using Engine.Input;
+using Engine.SceneManagement;
 
-var isRunning = true;
-var accumulator = 0.0;
-
-var stopwatch = new Stopwatch();
-stopwatch.Start();
-
-double previousTime = stopwatch.Elapsed.TotalMilliseconds;
-
-while (isRunning)
+namespace Engine.Core
 {
-    double currentTime = stopwatch.Elapsed.TotalMilliseconds;
-    var deltaTime = currentTime - previousTime;
-    
-    Time.CurrentTime = currentTime;
-    Time.PreviousFrameTime = previousTime;
-    Time.DeltaTime = deltaTime;
-    
-    previousTime = currentTime;
-    accumulator += deltaTime;
-
-    while (accumulator >= Time.FixedDeltaTime)
+    public static class EngineLoop
     {
-        accumulator -= Time.FixedDeltaTime;
-    }
+        private static Stopwatch _stopwatch = new();
+        private static double _previousFrameTime;
+        private static double _currentTime;
+        private static double _deltaTime;
+        private static double _accumulator;
+        private static int _frameCount;
+        private static bool _isRunning = true;
+        
+        public static void Main()
+        {
+            _stopwatch.Start();
+            _previousFrameTime = _stopwatch.Elapsed.TotalMilliseconds;
 
-    if (Console.KeyAvailable)
-    {
-        var key = Console.ReadKey(true).Key;
-        if (key == ConsoleKey.Escape)
-            isRunning = false;
+            while (_isRunning)
+            {
+                CalculateTime();
+                InputSystem.OnTick();
+                
+                while (_accumulator >= Time.FixedDeltaTime)
+                {
+                    _accumulator -= Time.FixedDeltaTime;
+                }
+
+                SceneManager.CurrentScene.OnTick();
+                
+                if (InputSystem.IsStarted(ConsoleKey.A))
+                    _isRunning = false;
+            }
+
+            _stopwatch.Stop();
+            Console.WriteLine($"{_stopwatch.ElapsedMilliseconds} ms");
+        }
+        
+        private static void CalculateTime()
+        {
+            ++_frameCount;
+            _currentTime = _stopwatch.Elapsed.TotalMilliseconds;
+            _deltaTime = _currentTime - _previousFrameTime;
+    
+            Time.CurrentTime = _currentTime;
+            Time.PreviousFrameTime = _previousFrameTime;
+            Time.DeltaTime = _deltaTime;
+            Time.CurrentFrame = _frameCount;
+    
+            _previousFrameTime = _currentTime;
+            _accumulator += _deltaTime;
+        }
     }
 }
-
-stopwatch.Stop();
-Console.WriteLine($"{stopwatch.ElapsedMilliseconds} ms");
