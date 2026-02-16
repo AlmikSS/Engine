@@ -2,6 +2,6 @@
 {
     public class Component
     {
-        
+        internal Entity Owner;
     }
 }

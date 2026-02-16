@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics;
 using Engine.Input;
 using Engine.SceneManagement;
+using Engine.World;
 
 namespace Engine.Core
 {
@@ -18,6 +19,8 @@ namespace Engine.Core
         {
             _stopwatch.Start();
             _previousFrameTime = _stopwatch.Elapsed.TotalMilliseconds;
+            
+            SceneManager.LoadScene(new Scene());
 
             while (_isRunning)
             {

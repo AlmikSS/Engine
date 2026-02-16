@@ -6,9 +6,9 @@ namespace Engine.SceneManagement
     {
         public static Scene CurrentScene { get; private set; }
 
-        public static void LoadScene()
+        public static void LoadScene(Scene scene)
         {
-            
+            CurrentScene = scene;
         }
     }
 }
