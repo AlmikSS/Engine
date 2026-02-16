@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics;
 using Engine.Input;
+using Engine.Rending;
 using Engine.SceneManagement;
 using Engine.World;
 
@@ -7,20 +8,27 @@ namespace Engine.Core
 {
     public static class EngineLoop
     {
-        private static Stopwatch _stopwatch = new();
+        private static readonly Stopwatch _stopwatch = new();
         private static double _previousFrameTime;
         private static double _currentTime;
         private static double _deltaTime;
         private static double _accumulator;
         private static int _frameCount;
-        private static bool _isRunning = true;
+        private static bool _isRunning;
         
-        public static void Main()
+        public static void Run(Scene startScene, RenderSettings? renderSettings = null)
         {
+            if (startScene is null)
+                throw new ArgumentNullException(nameof(startScene));
+
+            _isRunning = true;
+            _frameCount = 0;
+            _accumulator = 0;
             _stopwatch.Start();
             _previousFrameTime = _stopwatch.Elapsed.TotalMilliseconds;
             
-            SceneManager.LoadScene(new Scene());
+            SceneManager.LoadScene(startScene);
+            Renderer.Initialize(renderSettings);
 
             while (_isRunning)
             {
@@ -29,16 +37,19 @@ namespace Engine.Core
                 
                 while (_accumulator >= Time.FixedDeltaTime)
                 {
+                    SceneManager.CurrentScene.OnFixedTick();
                     _accumulator -= Time.FixedDeltaTime;
                 }
 
                 SceneManager.CurrentScene.OnTick();
+                Renderer.Render(SceneManager.CurrentScene);
                 
-                if (InputSystem.IsStarted(ConsoleKey.A))
+                if (Renderer.ShouldClose)
                     _isRunning = false;
             }
 
             _stopwatch.Stop();
+            Renderer.Shutdown();
             Console.WriteLine($"{_stopwatch.ElapsedMilliseconds} ms");
         }
         

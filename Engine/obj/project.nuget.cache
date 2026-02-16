@@ -1,8 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "Ra7dRMsy1Ps=",
+  "dgSpecHash": "ltYS9zBg2eM=",
   "success": true,
   "projectFilePath": "C:\\Users\\2008A\\Documents\\RiderProjects\\Engine\\Engine\\Engine.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\2008A\\.nuget\\packages\\raylib-cs\\7.0.2\\raylib-cs.7.0.2.nupkg.sha512"
+  ],
   "logs": []
 }

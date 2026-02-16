@@ -1,4 +1,5 @@
-﻿using Engine.World.Components;
+﻿using Engine.API;
+using Engine.World.Components;
 
 namespace Engine.World
 {
@@ -16,10 +17,30 @@ namespace Engine.World
             Transform.Owner = this;
         }
 
+        internal void OnTick()
+        {
+            foreach (var component in _components)
+            {
+                component.Tick();
+            }
+        }
+
+        internal void OnFixedTick()
+        {
+            foreach (var component in _components)
+            {
+                component.FixedTick();
+            }
+        }
+        
         public void AddComponent<T>() where T : Component, new()
         {
             var component = new T();
             component.Owner = this;
+            
+            if (component is GameBehaviour gameBehaviour)
+                gameBehaviour.Initialize(this);
+            
             _components.Add(component);
         }
 
