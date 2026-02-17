@@ -68,5 +68,10 @@
         {
             return new Vector2(vector.X - multiplier, vector.Y - multiplier);
         }
+
+        public static Vector2 operator -(Vector2 vector)
+        {
+            return new Vector2(-vector.X, -vector.Y);
+        }
     }
 }

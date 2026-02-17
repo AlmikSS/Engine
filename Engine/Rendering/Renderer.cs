@@ -11,6 +11,7 @@ namespace Engine.Rending
         private static readonly Dictionary<string, Texture2D> _textureCache = new(StringComparer.OrdinalIgnoreCase);
         private static bool _initialized;
         private static RenderSettings _settings = new();
+        public static bool DrawGizmos { get; set; }
 
         public static bool ShouldClose => _initialized && Raylib.WindowShouldClose();
 
@@ -19,6 +20,7 @@ namespace Engine.Rending
             if (_initialized) return;
 
             _settings = settings ?? new RenderSettings();
+            DrawGizmos = _settings.DrawGizmos;
 
             ConfigFlags flags = ConfigFlags.Msaa4xHint;
             if (_settings.VSync) flags |= ConfigFlags.VSyncHint;
@@ -43,6 +45,9 @@ namespace Engine.Rending
 
             foreach (var item in drawItems)
                 Draw(item.entity, item.renderer);
+
+            if (DrawGizmos)
+                DrawColliderGizmos(scene);
 
             Raylib.EndMode2D();
             Raylib.EndDrawing();
@@ -119,6 +124,32 @@ namespace Engine.Rending
             var origin = new RayVec2(dst.Width * sr.PivotNormalized.X, dst.Height * sr.PivotNormalized.Y);
 
             Raylib.DrawTexturePro(texture, src, dst, origin, sr.RotationDeg, sr.Tint);
+        }
+
+        private static void DrawColliderGizmos(Scene scene)
+        {
+            foreach (var entity in scene.ActiveEntities)
+            {
+                if (!entity.TryGetComponent<BoxCollider2D>(out var box))
+                    continue;
+
+                DrawBoxCollider(box);
+            }
+        }
+
+        private static void DrawBoxCollider(BoxCollider2D box)
+        {
+            var aabb = box.GetAabb();
+            
+            var bottomLeft = new RayVec2(aabb.MinX, -aabb.MinY);
+            var bottomRight = new RayVec2(aabb.MaxX, -aabb.MinY);
+            var topLeft = new RayVec2(aabb.MinX, -aabb.MaxY);
+            var topRight = new RayVec2(aabb.MaxX, -aabb.MaxY);
+
+            Raylib.DrawLineV(bottomLeft, bottomRight, _settings.ColliderGizmoColor);
+            Raylib.DrawLineV(bottomRight, topRight, _settings.ColliderGizmoColor);
+            Raylib.DrawLineV(topRight, topLeft, _settings.ColliderGizmoColor);
+            Raylib.DrawLineV(topLeft, bottomLeft, _settings.ColliderGizmoColor);
         }
 
         private static Texture2D GetOrLoadTexture(string path)

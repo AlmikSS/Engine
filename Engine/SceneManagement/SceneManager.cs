@@ -1,4 +1,5 @@
 ﻿using Engine.Entities;
+using Engine.Physics;
 
 namespace Engine.SceneManagement
 {
@@ -9,6 +10,7 @@ namespace Engine.SceneManagement
         public static void LoadScene(Scene scene)
         {
             CurrentScene = scene;
+            PhysicsEngine.RebuildScene();
         }
     }
 }

@@ -6,27 +6,25 @@ namespace Engine.Entities.Components
 {
     public sealed class Rigidbody2D : Component
     {
-        public Vector2 Position { get; private set; }
         public Vector2 Velocity;
-        public float Mass { get; private set; } = 1;
+        public float Mass = 1f;
+        public bool IsStatic = false;
 
-        private Vector2 _force;
-        
-        internal override void OnSceneCreated()
+        public void AddForce(Vector2 force)
         {
-            PhysicsEngine.Register(this);
+            if (IsStatic)
+                return;
+            
+            Velocity += force / Mass * Time.FixedDeltaTime;
         }
 
         internal void PhysicsTick(PhysicsSettings settings)
         {
+            if (IsStatic)
+                return;
+            
             Velocity += settings.Gravity * Time.FixedDeltaTime;
-            Position += Velocity * Time.FixedDeltaTime;
-        }
-
-        internal override void Tick()
-        {
-            base.Tick();
-            Owner.Transform.Position = Position;
+            Owner.Transform.Position += Velocity * Time.FixedDeltaTime;
         }
     }
 }
