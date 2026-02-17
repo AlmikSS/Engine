@@ -8,7 +8,7 @@ namespace Engine.Physics
     {
         private static readonly List<Rigidbody2D> _rigidbodies = new();
         private static readonly List<Collider2D> _colliders = new();
-
+        
         private static readonly HashSet<CollisionPair> _currentPairs = new(); 
         private static readonly HashSet<CollisionPair> _previousPairs = new(); 
         
@@ -19,6 +19,16 @@ namespace Engine.Physics
             _settings = settings;
         }
 
+        internal static void Register(Rigidbody2D rigidbody)
+        {
+            _rigidbodies.Add(rigidbody);
+        }
+
+        internal static void Register(Collider2D collider)
+        {
+            _colliders.Add(collider);
+        }
+        
         internal static void RebuildScene()
         {
             _rigidbodies.Clear();

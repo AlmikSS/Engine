@@ -9,11 +9,15 @@ namespace Engine.Entities.Components
         public Vector2 Velocity;
         public float Mass = 1f;
         public bool IsStatic = false;
+        public bool UseGravity = true;
 
-        public void AddForce(Vector2 force)
+        public void AddForce(Vector2 force, bool resetVelocity = false)
         {
             if (IsStatic)
                 return;
+            
+            if (resetVelocity)
+                Velocity = Vector2.Zero;
             
             Velocity += force / Mass * Time.FixedDeltaTime;
         }
@@ -23,7 +27,9 @@ namespace Engine.Entities.Components
             if (IsStatic)
                 return;
             
-            Velocity += settings.Gravity * Time.FixedDeltaTime;
+            if (UseGravity)
+                Velocity += settings.Gravity * Time.FixedDeltaTime;
+            
             Owner.Transform.Position += Velocity * Time.FixedDeltaTime;
         }
     }

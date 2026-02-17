@@ -6,12 +6,14 @@ namespace Engine.Entities
     {
         private static int _idCounter;
         
-        public static Entity Create()
+        public static Entity Create(Scene scene)
         {
             var id = "Entity_" + _idCounter;
             ++_idCounter;
 
-            return new Entity(id, new Transform());
+            var entity = new Entity(id, new Transform());
+            scene.AddEntity(entity);
+            return entity;
         }
     }
 }

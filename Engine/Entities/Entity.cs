@@ -41,7 +41,7 @@ namespace Engine.Entities
             }
         }
         
-        public void AddComponent<T>() where T : Component, new()
+        public T AddComponent<T>() where T : Component, new()
         {
             var component = new T();
             component.Owner = this;
@@ -50,6 +50,7 @@ namespace Engine.Entities
                 gameBehaviour.Initialize(this);
             
             _components.Add(component);
+            return component;
         }
 
         public bool TryGetComponent<T>(out T component) where T : Component

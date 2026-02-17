@@ -16,6 +16,8 @@ namespace Engine.Core
         private static float _accumulator;
         private static int _frameCount;
         private static bool _isRunning;
+
+        public static bool IsRunning => _isRunning; 
         
         public static void Run(Scene startScene, PhysicsSettings physicsSettings, RenderSettings? renderSettings = null)
         {
@@ -48,6 +50,8 @@ namespace Engine.Core
 
                 SceneManager.CurrentScene.OnTick();
                 Renderer.Render(SceneManager.CurrentScene);
+                SceneManager.CurrentScene.SpawnQueue();
+                SceneManager.CurrentScene.DespawnQueue();
                 
                 if (Renderer.ShouldClose)
                     _isRunning = false;
